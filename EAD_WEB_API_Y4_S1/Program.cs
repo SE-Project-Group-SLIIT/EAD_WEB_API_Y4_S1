@@ -29,15 +29,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins", builder =>
+    options.AddPolicy("AllowSpecificOrigin", builder =>
     {
-        builder
-            .WithOrigins("http://localhost:3000", "http://localhost:3001") // Add multiple origins
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        builder.WithOrigins("http://localhost:3000") // Replace with your client's origin
+               .AllowAnyMethod()
+               .AllowAnyHeader();
     });
 });
-
 
 
 var app = builder.Build();
