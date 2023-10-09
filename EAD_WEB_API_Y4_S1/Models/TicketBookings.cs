@@ -10,7 +10,7 @@ namespace EAD_WEB_API_Y4_S1.Models
         public string? BookingId { get; set; }
 
         [BsonElement("travelerId")]
-        public string? TravelerId { get; set; } = null!;
+        public string? TravelerId { get; set; } 
 
         [BsonElement("bookingDate")]
         public DateTime BookingDate { get; set; }
@@ -19,13 +19,14 @@ namespace EAD_WEB_API_Y4_S1.Models
         public DateTime TravelDate { get; set; }
 
         [BsonElement("trainId")]
-        public int TrainId { get; set; }
+        public string? TrainId { get; set; }
 
         [BsonElement("numberOfPassengers")]
         public int NumberOfPassengers { get; set; }
 
         [BsonElement("status")]
         public string Status { get; set; } = null!;
+
     }
 
 }

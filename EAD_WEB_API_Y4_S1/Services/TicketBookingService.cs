@@ -34,5 +34,20 @@ namespace EAD_WEB_API_Y4_S1.Services
 
         public async Task RemoveAsync(string id) =>
             await _TicketBookingsCollection.DeleteOneAsync(x => x.BookingId == id);
+
+        public async Task<long> CountReservationsByReferenceId(string referenceId)
+        {
+            var filter = Builders<TicketBookings>.Filter.Eq(x => x.TravelerId, referenceId);
+            var count = await _TicketBookingsCollection.CountDocumentsAsync(filter);
+            return count;
+        }
+
+        public async Task<List<TicketBookings>> GetReservationsByReferenceId(string referenceId)
+        {
+
+            var filter = Builders<TicketBookings>.Filter.Eq(x => x.TravelerId, referenceId);
+            var reservations = await _TicketBookingsCollection.Find(filter).ToListAsync();
+            return reservations;
+        }
     }
 }
