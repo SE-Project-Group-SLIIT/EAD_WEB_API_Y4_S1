@@ -7,7 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<TravelerStoreDatabaseSettings>(
     builder.Configuration.GetSection("StoreDatabase"));
 
+builder.Services.Configure<TicketBookingsStoreDatabaseSettings>(
+    builder.Configuration.GetSection("StoreDatabase"));
+
 builder.Services.AddSingleton<TravelerService>();
+builder.Services.AddSingleton<TicketBookingService>();
 
 
 
