@@ -13,9 +13,13 @@ builder.Services.Configure<TicketBookingsStoreDatabaseSettings>(
 builder.Services.Configure<UserStoreDatabaseSettings>(
     builder.Configuration.GetSection("StoreDatabase"));
 
+builder.Services.Configure<TrainsStoreDatabaseSettings>(
+    builder.Configuration.GetSection("StoreDatabase"));
+
 builder.Services.AddSingleton<TravelerService>();
 builder.Services.AddSingleton<TicketBookingService>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<TrainService>();
 
 
 
