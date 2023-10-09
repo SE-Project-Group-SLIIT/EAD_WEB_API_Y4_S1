@@ -43,14 +43,14 @@ namespace EAD_WEB_API_Y4_S1.Controllers
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> Update(string id, Traveler updatedTraveler)
         {
-            var book = await _travelerService.GetAsync(id);
+            var traveler = await _travelerService.GetAsync(id);
 
-            if (book is null)
+            if (traveler is null)
             {
                 return NotFound();
             }
 
-            updatedTraveler.Id = book.Id;
+            updatedTraveler.Id = traveler.Id;
 
             await _travelerService.UpdateAsync(id, updatedTraveler);
 
@@ -60,9 +60,9 @@ namespace EAD_WEB_API_Y4_S1.Controllers
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var book = await _travelerService.GetAsync(id);
+            var traveler = await _travelerService.GetAsync(id);
 
-            if (book is null)
+            if (traveler is null)
             {
                 return NotFound();
             }
