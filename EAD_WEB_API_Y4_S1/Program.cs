@@ -10,8 +10,12 @@ builder.Services.Configure<TravelerStoreDatabaseSettings>(
 builder.Services.Configure<TicketBookingsStoreDatabaseSettings>(
     builder.Configuration.GetSection("StoreDatabase"));
 
+builder.Services.Configure<UserStoreDatabaseSettings>(
+    builder.Configuration.GetSection("StoreDatabase"));
+
 builder.Services.AddSingleton<TravelerService>();
 builder.Services.AddSingleton<TicketBookingService>();
+builder.Services.AddSingleton<UserService>();
 
 
 
