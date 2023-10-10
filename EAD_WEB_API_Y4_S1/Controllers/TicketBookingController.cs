@@ -9,10 +9,12 @@ namespace EAD_WEB_API_Y4_S1.Controllers
     public class TicketBookingController : Controller
     {
         private readonly TicketBookingService _ticketBookingService;
+        private readonly TrainService _trainService;
 
-        public TicketBookingController(TicketBookingService ticketBookingService)
+        public TicketBookingController(TicketBookingService ticketBookingService, TrainService trainService)
         {
             _ticketBookingService = ticketBookingService;
+            _trainService = trainService;
         }
 
         [HttpGet]
@@ -34,10 +36,48 @@ namespace EAD_WEB_API_Y4_S1.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(TicketBookings newTicketBookings)
         {
-            await _ticketBookingService.CreateAsync(newTicketBookings);
+            if (newTicketBookings == null)
+            {
+                return BadRequest("Invalid input: newTicketBookings is null.");
+            }
 
-            return CreatedAtAction(nameof(Get), new { id = newTicketBookings.BookingId }, newTicketBookings);
+            if ((newTicketBookings.TravelDate - newTicketBookings.BookingDate).TotalDays <= 30)
+            {
+                // Check the existing reservations for the same reference ID
+                var existingReservationsCount = await _ticketBookingService.CountReservationsByReferenceId(newTicketBookings.TravelerId);
+
+                if (existingReservationsCount >= 4)
+                {
+                    // Return a bad request response if the maximum reservation limit is exceeded
+                    return BadRequest("The maximum limit of 4 reservations per reference ID has been reached.");
+                }
+
+                await _ticketBookingService.CreateAsync(newTicketBookings);
+                return CreatedAtAction(nameof(Get), new { id = newTicketBookings.BookingId }, newTicketBookings);
+            }
+            else
+            {
+                // Return a bad request response if the reservation date validation fails
+                return BadRequest("The reservation date must be within 30 days from the booking date.");
+            }
+
         }
+        [HttpGet("countreservations/{referenceId}")]
+        public async Task<IActionResult> CountReservations(string referenceId)
+        {
+            long count = await _ticketBookingService.CountReservationsByReferenceId(referenceId);
+            return Ok(count);
+        }
+
+        [HttpGet("getreservations/{referenceId}")]
+        public async Task<IActionResult> GetReservations(string referenceId)
+        {
+
+            List<TicketBookings> reservations = await _ticketBookingService.GetReservationsByReferenceId(referenceId);
+            return Ok(reservations);
+
+        }
+
 
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> Update(string id, TicketBookings updatedTicketBookings)
