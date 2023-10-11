@@ -3,11 +3,11 @@ using MongoDB.Bson;
 
 namespace EAD_WEB_API_Y4_S1.Models
 {
-    public class Trains
+    public class TrainSchedule
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? TrainId { get; set; }
+        public string? TrainScheduleId { get; set; }
 
         [BsonElement("trainName")]
         public string TrainName { get; set; } = null!;
@@ -21,8 +21,17 @@ namespace EAD_WEB_API_Y4_S1.Models
         [BsonElement("trainType")]
         public string TrainType { get; set; } = null!;
 
-        [BsonElement("trainStations")]
-        public List<string> TrainStations { get; set; } = new List<string>();
+        [BsonElement("departureTime")]
+        public DateTime DepartureTime { get; set; }
+
+        [BsonElement("arrivalTime")]
+        public DateTime ArrivalTime { get; set; }
+
+        [BsonElement("isActive")]
+        public bool IsActive { get; set; }
+
+        [BsonElement("isPublished")]
+        public bool IsPublished { get; set; }
 
     }
 }
