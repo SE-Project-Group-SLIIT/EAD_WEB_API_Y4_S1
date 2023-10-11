@@ -18,24 +18,11 @@ namespace EAD_WEB_API_Y4_S1.Models
         [BsonElement("arrivalStation")]
         public string ArrivalStation { get; set; } = null!;
 
-        [BsonElement("departureTime")]
-        public DateTime DepartureTime { get; set; }
+        [BsonElement("trainType")]
+        public string TrainType { get; set; } = null!;
 
-        [BsonElement("arrivalTime")]
-        public DateTime ArrivalTime { get; set; }
+        [BsonElement("trainStations")]
+        public List<string> TrainStations { get; set; } = new List<string>();
 
-        [BsonElement("isActive")]
-        public bool IsActive { get; set; }
-
-        [BsonElement("isPublished")]
-        public bool IsPublished { get; set; }
-        //public List<Schedule> Schedules { get; set; }
     }
-
-    //public class Schedule
-    //{
-    //    public int ScheduleId { get; set; }
-    //    public DateTime DepartureTime { get; set; }
-    //    public DateTime ArrivalTime { get; set; }
-    //}
 }
