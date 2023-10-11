@@ -33,5 +33,11 @@ namespace EAD_WEB_API_Y4_S1.Models
         [BsonElement("isPublished")]
         public bool IsPublished { get; set; }
 
+        [BsonElement("scheduleDate")]
+        public DateTime ScheduleDate { get; set; }
+
+        [BsonElement("trainStations")]
+        public List<string> TrainStations { get; set; } = new List<string>();
+
     }
 }
