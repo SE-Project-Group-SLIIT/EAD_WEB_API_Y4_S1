@@ -24,15 +24,15 @@ public class TravelerService
        await _TravelerCollection.Find(_ => true).ToListAsync();
 
     public async Task<Traveler?> GetAsync(string id) =>
-        await _TravelerCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+        await _TravelerCollection.Find(x => x.NIC == id).FirstOrDefaultAsync();
 
     public async Task CreateAsync(Traveler newTraveler) =>
         await _TravelerCollection.InsertOneAsync(newTraveler);
 
     public async Task UpdateAsync(string id, Traveler updatedTraveler) =>
-        await _TravelerCollection.ReplaceOneAsync(x => x.Id == id, updatedTraveler);
+        await _TravelerCollection.ReplaceOneAsync(x => x.NIC == id, updatedTraveler);
 
     public async Task RemoveAsync(string id) =>
-        await _TravelerCollection.DeleteOneAsync(x => x.Id == id);
+        await _TravelerCollection.DeleteOneAsync(x => x.NIC == id);
 
 }

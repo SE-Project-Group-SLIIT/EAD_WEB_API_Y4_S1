@@ -1,6 +1,7 @@
 ﻿using EAD_WEB_API_Y4_S1.Models;
 using EAD_WEB_API_Y4_S1.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace EAD_WEB_API_Y4_S1.Controllers
 {
@@ -18,29 +19,39 @@ namespace EAD_WEB_API_Y4_S1.Controllers
         [HttpGet]
         public async Task<List<Traveler>> Get() => await _travelerService.GetAsync();
 
-        [HttpGet("{id:length(24)}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Traveler>> Get(string id)
         {
-            var traveler = await _travelerService.GetAsync(id);
+                var traveler = await _travelerService.GetAsync(id);
 
-            if (traveler is null)
-            {
-                return NotFound();
-            }
+                if (traveler is null)
+                {
+                    return NotFound();
+                }
 
-            return traveler;
+                return traveler;
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Post(Traveler newTraveler)
         {
-            await _travelerService.CreateAsync(newTraveler);
+            try { 
+                await _travelerService.CreateAsync(newTraveler);
+                return CreatedAtAction(nameof(Get), new { id = newTraveler.NIC }, newTraveler);
+            }
+            catch (MongoWriteException ex)
+            {
+                if (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
+                {
+                    throw new Exception("A traveler with the same NIC already exists.");
+                }
+                throw;
 
-            return CreatedAtAction(nameof(Get), new { id = newTraveler.Id }, newTraveler);
+            }
         }
 
-        [HttpPut("{id:length(24)}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, Traveler updatedTraveler)
         {
             var traveler = await _travelerService.GetAsync(id);
@@ -50,14 +61,14 @@ namespace EAD_WEB_API_Y4_S1.Controllers
                 return NotFound();
             }
 
-            updatedTraveler.Id = traveler.Id;
+            updatedTraveler.NIC = traveler.NIC;
 
             await _travelerService.UpdateAsync(id, updatedTraveler);
 
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             var traveler = await _travelerService.GetAsync(id);

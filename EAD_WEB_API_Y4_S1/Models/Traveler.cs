@@ -5,18 +5,19 @@ namespace EAD_WEB_API_Y4_S1.Models
 {
     public class Traveler
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        //[BsonRepresentation(BsonType.ObjectId)]
+        //public string? Id { get; set; }
 
-        [BsonElement("nic")]
+        //[BsonElement("nic")]
+        [BsonId]
+        [BsonRepresentation(BsonType.String)]
         public string NIC { get; set; } = null!;
 
-        [BsonElement("firstName")]
-        public string FirstName { get; set; } = null!;
+        [BsonElement("fullName")]
+        public string FullName { get; set; } = null!;
 
-        [BsonElement("lastName")]
-        public string LastName { get; set; } = null!;
+        //[BsonElement("lastName")]
+        //public string LastName { get; set; } = null!;
 
         [BsonElement("email")]
         public string Email { get; set; } = null!;
