@@ -19,7 +19,12 @@ namespace EAD_WEB_API_Y4_S1.Services
             _TrainScheduleCollection = mongoDatabase.GetCollection<TrainSchedule>(
                 trainScheduleStoreDatabaseSettings.Value.TrainScheduleCollectionName);
         }
+        public async Task<List<TrainSchedule>> GetTrainSchedulesByStations(string station1, string station2)
+        {
+            var filter = Builders<TrainSchedule>.Filter.All("trainStations", new List<string> { station1, station2 });
 
+            return await _TrainScheduleCollection.Find(filter).ToListAsync();
+        }
         public async Task<List<TrainSchedule>> GetAsync() =>
            await _TrainScheduleCollection.Find(_ => true).ToListAsync();
 
