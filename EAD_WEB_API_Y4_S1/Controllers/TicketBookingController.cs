@@ -10,11 +10,13 @@ namespace EAD_WEB_API_Y4_S1.Controllers
     {
         private readonly TicketBookingService _ticketBookingService;
         private readonly TrainService _trainService;
+        private readonly TrainScheduleService _trainScheduleService;
 
-        public TicketBookingController(TicketBookingService ticketBookingService, TrainService trainService)
+        public TicketBookingController(TicketBookingService ticketBookingService, TrainService trainService, TrainScheduleService trainScheduleService)
         {
             _ticketBookingService = ticketBookingService;
             _trainService = trainService;
+            _trainScheduleService = trainScheduleService;
         }
 
         [HttpGet]
@@ -110,5 +112,23 @@ namespace EAD_WEB_API_Y4_S1.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("gettraindetails/")]
+        public async Task<ActionResult> GetTrainSchedulesByStations( string station1, string station2)
+        {
+            if (string.IsNullOrEmpty(station1) || string.IsNullOrEmpty(station2))
+            {
+                return BadRequest("Both station1 and station2 must be provided.");
+            }
+
+            var trainSchedules = await _trainScheduleService.GetTrainSchedulesByStations(station1, station2);
+
+            if (trainSchedules == null || trainSchedules.Count == 0)
+            {
+                return NotFound("No matching train schedules found.");
+            }
+
+            return Ok(trainSchedules);
+}
     }
 }
