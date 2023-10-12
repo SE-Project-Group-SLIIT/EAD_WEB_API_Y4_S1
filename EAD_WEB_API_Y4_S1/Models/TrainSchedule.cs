@@ -39,5 +39,8 @@ namespace EAD_WEB_API_Y4_S1.Models
         [BsonElement("trainStations")]
         public List<string> TrainStations { get; set; } = new List<string>();
 
+        [BsonElement("isCancelled")]
+        public bool IsCancelled { get; set; }
+
     }
 }
