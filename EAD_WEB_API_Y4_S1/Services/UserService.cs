@@ -35,5 +35,20 @@ namespace EAD_WEB_API_Y4_S1.Services
         public async Task RemoveAsync(string id) =>
             await _UserCollection.DeleteOneAsync(x => x.UserId == id);
 
+        public async Task<Users?> GetByEmailAsync(string email) =>
+        await _UserCollection.Find(x => x.Email == email).FirstOrDefaultAsync();
+
+        public async Task<Users?> AuthenticateAsync(string email, string nic)
+        {
+            var user = await GetByEmailAsync(email);
+
+            if (user != null && user.NIC == nic)
+            {
+                return user;
+            }
+
+            return null;
+        }
+
     }
 }
