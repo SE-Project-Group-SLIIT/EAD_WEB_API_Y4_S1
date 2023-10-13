@@ -31,6 +31,19 @@ namespace EAD_WEB_API_Y4_S1.Controllers
 
                 return traveler;
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(string nic, string email)
+        {
+            var traveler = await _travelerService.LoginAsync(nic, email);
+
+            if (traveler == null)
+            {
+                return Unauthorized("Invalid credentials");
+            }
+
+            // Return the token to the client
+            return Ok(traveler);
+        }
 
 
         [HttpPost]

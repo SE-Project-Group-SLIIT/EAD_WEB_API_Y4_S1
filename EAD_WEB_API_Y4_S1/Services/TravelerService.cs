@@ -35,4 +35,12 @@ public class TravelerService
     public async Task RemoveAsync(string id) =>
         await _TravelerCollection.DeleteOneAsync(x => x.NIC == id);
 
+    public async Task<Traveler?> LoginAsync(string nic, string email)
+    {
+        // Check if the traveler exists with the provided NIC and email
+        var traveler = await _TravelerCollection.Find(x => x.NIC == nic && x.Email == email).FirstOrDefaultAsync();
+
+        return traveler;
+    }
+
 }
