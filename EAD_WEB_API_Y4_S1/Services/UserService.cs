@@ -1,4 +1,15 @@
-﻿using EAD_WEB_API_Y4_S1.Models;
+﻿
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FileName: UserService.cs
+// FileType: C# Source file
+// Author: Lalitha Maddumage
+// Created On: 10/08/2023 1:56:39 AM
+// Last Modified On: 10/13/2023 11:53:23 AM
+// Copy Rights: N/A
+// Description: Service class for user-related operations in the Web API
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using EAD_WEB_API_Y4_S1.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
