@@ -70,6 +70,29 @@ namespace EAD_WEB_API_Y4_S1.Controllers
 
             return NoContent();
         }
-       
+        [HttpPost]
+        [Route("login")]
+        public async Task<ActionResult<object>> Login(Users loginRequest)
+        {
+            var user = await _userService.GetByEmailAsync(loginRequest.Email);
+
+            if (user is null || user.NIC != loginRequest.NIC)
+            {
+                return Unauthorized();
+            }
+
+            // After successful login, you can return an anonymous type.
+            var response = new
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                UserType = user.Role
+            };
+
+            return response;
+        }
+
+
+
     }
 }

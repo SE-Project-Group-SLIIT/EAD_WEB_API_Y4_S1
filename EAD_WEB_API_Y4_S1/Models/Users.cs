@@ -18,7 +18,10 @@ namespace EAD_WEB_API_Y4_S1.Models
         [BsonElement("role")]
         public string Role { get; set; } = null!;
 
-        [BsonElement("isActive")]
-        public bool IsActive { get; set; }
+        [BsonElement("email")]
+        public string Email { get; set; } = null!;
+
+        [BsonElement("nic")]
+        public string NIC { get; set; } = null !;
     }
 }
