@@ -1,4 +1,15 @@
-﻿using EAD_WEB_API_Y4_S1.Models;
+﻿
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FileName: UserController.cs
+// FileType: C# Source file
+// Author: Lalitha Maddumage
+// Created On: 10/07/2023 11:06:09 AM
+// Last Modified On: 10/13/2023 13:13:23 PM
+// Copy Rights: N/A
+// Description: Controller for managing user-related operations in the Web API
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using EAD_WEB_API_Y4_S1.Models;
 using EAD_WEB_API_Y4_S1.Services;
 using Microsoft.AspNetCore.Mvc;
 
