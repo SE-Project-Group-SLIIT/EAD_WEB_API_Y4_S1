@@ -1,4 +1,23 @@
-﻿using EAD_WEB_API_Y4_S1.Models;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//FileName: TicketBookingController.cs
+
+//FileType: Visual C# Source file
+
+//Author : Madiwilage I.E
+
+//Created On : 2/10/20123 9:56:39 AM
+
+//Last Modified On :  13/10/20123 10:53:23 AM
+
+//Copy Rights : N/A
+
+//Description : Controller for defining database related functions
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+using EAD_WEB_API_Y4_S1.Models;
 using EAD_WEB_API_Y4_S1.Services;
 using Microsoft.AspNetCore.Mvc;
 
