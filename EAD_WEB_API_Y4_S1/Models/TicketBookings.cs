@@ -18,8 +18,8 @@ namespace EAD_WEB_API_Y4_S1.Models
         [BsonElement("travelDate")]
         public DateTime TravelDate { get; set; }
 
-        [BsonElement("trainId")]
-        public string? TrainId { get; set; }
+        [BsonElement("trainName")]
+        public string? TrainName { get; set; }
 
         [BsonElement("numberOfPassengers")]
         public int NumberOfPassengers { get; set; }
