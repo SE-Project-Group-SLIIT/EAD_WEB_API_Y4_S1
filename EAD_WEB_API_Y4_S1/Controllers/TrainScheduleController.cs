@@ -70,5 +70,25 @@ namespace EAD_WEB_API_Y4_S1.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("cancel/{id:length(24)}")]
+        public async Task<IActionResult> CancelTrainSchedule(string id)
+        {
+            var trainSchedule = await _trainScheduleService.GetAsync(id);
+
+            if (trainSchedule is null)
+            {
+                return NotFound();
+            }
+
+            // Set the isCancelled property to true
+            trainSchedule.IsCancelled = true;
+
+            // Update the train schedule in the database
+            await _trainScheduleService.UpdateAsync(id, trainSchedule);
+
+            return NoContent();
+        }
+
     }
 }
