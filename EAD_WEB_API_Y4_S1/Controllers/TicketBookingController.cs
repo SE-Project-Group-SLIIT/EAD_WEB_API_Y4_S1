@@ -133,14 +133,14 @@ namespace EAD_WEB_API_Y4_S1.Controllers
         }
 
         [HttpGet("gettraindetails/")]
-        public async Task<ActionResult> GetTrainSchedulesByStations( string station1, string station2)
+        public async Task<ActionResult> GetTrainSchedulesByStations( string arrivalStation, string departureStation)
         {
-            if (string.IsNullOrEmpty(station1) || string.IsNullOrEmpty(station2))
+            if (string.IsNullOrEmpty(arrivalStation) || string.IsNullOrEmpty(departureStation))
             {
                 return BadRequest("Both station1 and station2 must be provided.");
             }
 
-            var trainSchedules = await _trainScheduleService.GetTrainSchedulesByStations(station1, station2);
+            var trainSchedules = await _trainScheduleService.GetTrainSchedulesByStations(arrivalStation, departureStation);
 
             if (trainSchedules == null || trainSchedules.Count == 0)
             {
@@ -148,6 +148,25 @@ namespace EAD_WEB_API_Y4_S1.Controllers
             }
 
             return Ok(trainSchedules);
-}
+        }
+
+        [HttpPut("cancel/{id:length(24)}")]
+        public async Task<IActionResult> CancelReservation(string id)
+        {
+            var reservation = await _ticketBookingService.GetAsync(id);
+
+            if (reservation is null)
+            {
+                return NotFound();
+            }
+
+            // Set the isCancelled property to true
+            reservation.Status = "Cancelled";
+
+            // Update the train schedule in the database
+            await _ticketBookingService.UpdateAsync(id, reservation);
+
+            return NoContent();
+        }
     }
 }
