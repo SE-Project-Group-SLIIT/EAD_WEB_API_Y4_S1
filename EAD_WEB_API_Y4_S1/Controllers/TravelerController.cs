@@ -64,23 +64,53 @@ namespace EAD_WEB_API_Y4_S1.Controllers
         }
 
 
+        //[HttpPost]
+        //public async Task<IActionResult> Post(Traveler newTraveler)
+        //{
+        //    try { 
+        //        await _travelerService.CreateAsync(newTraveler);
+        //        return CreatedAtAction(nameof(Get), new { id = newTraveler.NIC }, newTraveler);
+        //    }
+        //    catch (MongoWriteException ex)
+        //    {
+        //        if (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
+        //        {
+        //            throw new Exception("A traveler with the same NIC already exists.");
+        //        }
+        //        throw;
+
+        //    }
+        //}
+
         [HttpPost]
         public async Task<IActionResult> Post(Traveler newTraveler)
         {
-            try { 
+            try
+            {
                 await _travelerService.CreateAsync(newTraveler);
                 return CreatedAtAction(nameof(Get), new { id = newTraveler.NIC }, newTraveler);
             }
-            catch (MongoWriteException ex)
-            {
-                if (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
-                {
-                    throw new Exception("A traveler with the same NIC already exists.");
-                }
-                throw;
+            //catch (MongoWriteException ex)
+            //{
+            //    if (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
+            //    {
+            //        return BadRequest("A traveler with the same NIC already exists.");
+            //    }
+            //    throw;
 
+            //}
+            catch (MongoWriteException ex) when (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
+            {
+                //return Conflict(new { message = "A traveler with the same NIC already exists." });
+                return StatusCode(409);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details here if necessary
+                return StatusCode(500, new { message = "An internal server error occurred." });
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, Traveler updatedTraveler)
